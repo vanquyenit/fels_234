@@ -6,14 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Activity extends Model
 {
-	protected $table = 'activities';
-
-    protected $fillable = ['user_id','action_type','scores'];
+    protected $fillable = [
+        'user_id', 
+        'action_type', 
+        'scores', 
+    ]; 
 
     public $timestamps = true;
     
     public function user () 
     {
-        return $this->belongTo('App\Models\User');
+        return $this->belongTo(User::class);
     }
 }

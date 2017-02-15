@@ -6,24 +6,28 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lesson extends Model
 {
-	protected $table = 'lessons';
-
-    protected $fillable = ['name','image','user_id','category_id','result'];
+    protected $fillable = [
+        'name', 
+        'image', 
+        'user_id', 
+        'category_id', 
+        'result', 
+    ];
 
     public $timestamps = true;
     
     public function user () 
     {
-        return $this->belongTo('App\Models\User');
+        return $this->belongTo(User::class);
     }
 
-    public function lessonword () 
+    public function lessonwords () 
     {
-        return $this->hasMany('App\Models\LessonWord');
+        return $this->hasMany(LessonWord::class);
     }
 
     public function category () 
     {
-        return $this->belongTo('App\Models\Category');
+        return $this->belongTo(Category::class);
     }
 }

@@ -6,19 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class WordAnswer extends Model
 {
-    protected $table = 'word_answers';
-
-    protected $fillable = ['content','corect','word_id'];
+    protected $fillable = [
+        'content', 
+        'corect', 
+        'word_id', 
+    ];
 
     public $timestamps = true;
 
-    public function lessonword () 
+    public function lessonwords () 
     {
-        return $this->hasMany('App\Models\LessonWord');
+        return $this->hasMany(LessonWord::class);
     }
 
     public function word () 
     {
-        return $this->belongTo('App\Models\Word');
+        return $this->belongTo(Word::class);
     }
 }
