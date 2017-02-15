@@ -6,19 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Learned extends Model
 {
-    protected $table = 'learneds';
-
-    protected $fillable = ['user_id','word_id'];
+    protected $fillable = [
+        'user_id', 
+        'word_id', 
+    ];
 
     public $timestamps = true;
     
-    public function user () 
+    public function users () 
     {
-        return $this->belongsToMany('App\Models\User');
+        return $this->hasMany(User::class);
     }
 
-    public function word () 
+    public function words () 
     {
-        return $this->belongsToMany('App\Models\Word');
+        return $this->hasMany(Word::class);
     }
 }

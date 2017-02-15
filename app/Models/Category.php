@@ -6,19 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    protected $table = 'categories';
-
-    protected $fillable = ['name'];
+    protected $fillable = [
+        'name', 
+    ];
 
     public $timestamps = true;
 
-    public function lesson () 
+    public function lessons () 
     {
-        return $this->hasMany('App\Models\Lesson');
+        return $this->hasMany(Lesson::class);
     }
 
-    public function word () 
+    public function words () 
     {
-        return $this->hasMany('App\Models\Word');
+        return $this->hasMany(Word::class);
     }
 }
