@@ -18,7 +18,7 @@ class CreateLessonsTable extends Migration
             $table->string('name');
             $table->string('image');
             $table->integer('user_id')->unsigned();
-            $table->integer('category_id')->unsigned();
+            $table->integer('course_id')->unsigned();
             $table->float('result');
             $table->timestamps();
         });

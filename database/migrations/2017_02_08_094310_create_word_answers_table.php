@@ -17,7 +17,7 @@ class CreateWordAnswersTable extends Migration
             $table->increments('id');
             $table->text('content');
             $table->integer('word_id')->unsigned();
-            $table->integer('correct');
+            $table->integer('correct')->nullable();
             $table->timestamps();
         });
     }

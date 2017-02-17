@@ -17,7 +17,7 @@ class CreateActivitiesTable extends Migration
             $table->increments('id');
             $table->integer('scores');
             $table->integer('user_id')->unsigned();
-            $table->string('action_type');
+            $table->string('action_type')->nullable();
             $table->timestamps();
         });
     }
