@@ -4,6 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use App\Http\Requests\LoginRequest;
+use Socialite;
+use Auth;
+use Hash;
+use App\Models\User;
 
 class LoginController extends Controller
 {
@@ -25,7 +31,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = './auth/login';
 
     /**
      * Create a new controller instance.
@@ -36,4 +42,28 @@ class LoginController extends Controller
     {
         $this->middleware('guest', ['except' => 'logout']);
     }
+
+    public function getLoginAdmin()
+    {
+        return view('admin.user.login');
+    }
+
+    public function postLoginAdmin(LoginRequest $request)
+    {
+        $login = [
+            'username' => $request->username,
+            'password' => $request->password,
+            'is_admin' => config('setting.admin'),
+        ];
+        
+        if (Auth::attempt($login)) {
+            return redirect()->action('Admin\IndexController@index');
+        } else {
+            return redirect()->action('Auth\LoginController@getLoginAdmin')->with([
+                'flash_level' => trans('login.login.danger'),
+                'flash_messages' => trans('login.login.checklogin'),
+            ]);
+        }
+    }
+    
 }
