@@ -10,23 +10,28 @@ class LessonWord extends Model
         'name',
         'lesson_id',
         'word_id',
-        'wordanswer_id',
+        'word_answer_id'
     ];
 
     public $timestamps = true;
-    
-    public function lesson () 
+
+    public function lesson ()
     {
-        return $this->belongTo(Lesson::class);
+        return $this->belongsTo(Lesson::class);
     }
 
-    public function word () 
+    public function word ()
     {
-        return $this->belongTo(Word::class);
+        return $this->belongsTo(Word::class);
     }
 
-    public function wordanswer () 
+    public function wordAnswer ()
     {
-        return $this->belongTo(WordAnswer::class);
+        return $this->belongsTo(WordAnswer::class);
+    }
+
+    public function learneds ()
+    {
+        return $this->hasMany(Learned::class);
     }
 }

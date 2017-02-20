@@ -3,33 +3,23 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class Word extends Model
 {
     protected $fillable = [
-        'content', 
-        'category_id', 
+        'content',
     ];
 
     public $timestamps = true;
 
-    public function lessonwords () 
+    public function lessonWords ()
     {
         return $this->hasMany(LessonWord::class);
     }
 
-    public function category () 
-    {
-        return $this->belongTo(Category::class);
-    }
-
-    public function wordanswers () 
+    public function wordAnswers ()
     {
         return $this->hasMany(WordAnswer::class);
-    }
-
-    public function learneds () 
-    {
-        return $this->hasMany(Learned::class);
     }
 }

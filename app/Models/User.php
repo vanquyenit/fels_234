@@ -15,12 +15,13 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 
-        'fullname', 
-        'email',  
-        'password', 
-        'avatar', 
-        'is_admin', 
+        'username',
+        'fullname',
+        'email',
+        'password',
+        'avatar',
+        'provider_id',
+        'is_admin',
     ];
 
     /**
@@ -29,27 +30,23 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 
-        'remember_token'  
+        'password',
+        'remember_token',
     ];
 
-    public function lessons () 
-    {
-        return $this->hasMany(Lesson::class);
-    }
-
-    public function activitys () 
+    public function activities ()
     {
         return $this->hasMany(Activity::class);
     }
 
-    public function relationships () 
+    public function relationships ()
     {
         return $this->hasMany(Relationship::class);
     }
 
-    public function learneds () 
+    public function learneds ()
     {
         return $this->hasMany(Learned::class);
     }
+    
 }

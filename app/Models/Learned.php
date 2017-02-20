@@ -7,19 +7,29 @@ use Illuminate\Database\Eloquent\Model;
 class Learned extends Model
 {
     protected $fillable = [
-        'user_id', 
-        'word_id', 
+        'user_id',
+        'course_id',
     ];
 
     public $timestamps = true;
-    
-    public function users () 
+
+    public function user ()
     {
-        return $this->hasMany(User::class);
+        return $this->belongsTo(User::class);
     }
 
-    public function words () 
+    public function course ()
     {
-        return $this->hasMany(Word::class);
+        return $this->belongsTo(Word::class);
+    }
+
+    public function lesson ()
+    {
+        return $this->belongsTo(Lesson::class);
+    }
+
+    public function lessonWord ()
+    {
+        return $this->belongsTo(Lesson::class);
     }
 }

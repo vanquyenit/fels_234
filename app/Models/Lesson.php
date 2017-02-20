@@ -7,27 +7,39 @@ use Illuminate\Database\Eloquent\Model;
 class Lesson extends Model
 {
     protected $fillable = [
-        'name', 
+        'name',
         'image', 
-        'user_id', 
-        'category_id', 
-        'result', 
+        'course_id', 
+        'level', 
     ];
 
     public $timestamps = true;
-    
-    public function user () 
-    {
-        return $this->belongTo(User::class);
-    }
 
-    public function lessonwords () 
+
+    public function lessonWords()
     {
         return $this->hasMany(LessonWord::class);
     }
 
-    public function category () 
+    public function course()
     {
-        return $this->belongTo(Category::class);
+        return $this->belongsTo(Course::class);
     }
+
+    public function learneds()
+    {
+        return $this->hasMany(Learned::class);
+    }
+
+    public static function getList()
+    {
+        return Lesson::with(
+            [
+                'course' => function ($query) {
+                    $query->orderBy('created_at', 'desc');
+                }
+            ]
+        )->get();
+    }
+
 }

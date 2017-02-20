@@ -7,18 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     protected $fillable = [
-        'name', 
+        'name',
     ];
 
     public $timestamps = true;
-
-    public function lessons () 
+    
+    public function courses ()
     {
-        return $this->hasMany(Lesson::class);
-    }
-
-    public function words () 
-    {
-        return $this->hasMany(Word::class);
+        return $this->hasMany(Course::class);
     }
 }

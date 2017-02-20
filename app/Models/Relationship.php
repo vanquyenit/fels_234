@@ -6,14 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Relationship extends Model
 {
+
     protected $fillable = [
-        'following', 
-        'follower', 
+        'following',
+        'follower',
     ];
 
     public $timestamps = true;
-    
-    public function users () 
+
+    public function users ()
     {
         return $this->hasMany(User::class);
     }
