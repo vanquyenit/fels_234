@@ -48,5 +48,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Learned::class);
     }
+
+    public static function checkMail($input)
+    {
+        return User::where('email', $input)->get();
+    }
     
 }
