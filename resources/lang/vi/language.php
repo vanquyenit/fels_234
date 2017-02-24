@@ -16,9 +16,9 @@ return [
             'enter_password_max' => 'Mật khẩu không quá 50 ký tự',
             'password_asme' => 'Mật khẩu không trùng khớp',
             'no_avatar' => 'Chưa có hình',
-             'enter_res_pasword' => 'Vui lòng nhập lại mật khẩu',
+            'enter_res_pasword' => 'Vui lòng nhập lại mật khẩu',
             'super_admin' => 'Siêu quản trị',
-            'no_delelet_user' => 'Bạn không có quyền được xóa các user này !!!',
+            'no_delete_user' => 'Bạn không có quyền được xóa các user này !!!',
             'edit_complete' => 'Sửa dữ liệu thành công !!!',
             'no_edit_user' => 'Bạn không có quyền sửa user này !!!',
             'edit_user' => 'Sửa thông tin',
@@ -65,15 +65,9 @@ return [
         'segment_admin' => 'admin',
         'word' => 'Tất cả từ vựng',
         'statistics' => 'Thôngs kê',
-    ],
-    'error_admin' => [
-        'error_name' => 'Vui lòng nhập tên bài học',
-        'exits_name' => 'Tên bài học đã có',
-        'error_course' => 'Vui lòng chọn khóa học',
-        'error_level' => 'Vui lòng chọn cấp độ',
-        'error_nember' => 'Vui lòng chọn thứ tự bài',
-        'error_images' => 'Vui lòng chọn ảnh',
+        'index' => 'Chào mừng bạn đến với trang quản trị',
     ],
 
 ];
+
 
