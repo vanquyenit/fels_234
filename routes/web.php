@@ -52,15 +52,15 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
         'as' => 'admin.category.postDelete',
         'uses' => 'CategoryController@postDelete',
     ]);
-
+    
+    Route::get('user/member', [
+        'as' => 'admin.user.getMember',
+        'uses' => 'UserController@getMember',
+    ]);
     Route::resource('user', 'UserController');
     Route::post('user/delete', [
         'as' => 'admin.user.postDelete',
         'uses' => 'UserController@postDelete',
-    ]);
-     Route::get('user/member', [
-        'as' => 'admin.user.getMember',
-        'uses' => 'UserController@getMember',
     ]);
 
     Route::resource('lesson', 'LessonController');

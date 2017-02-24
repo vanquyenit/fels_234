@@ -53,5 +53,20 @@ class User extends Authenticatable
     {
         return User::where('email', $input)->get();
     }
+
+    public function member()
+    {
+        return  User::where('is_admin', config('setting.member'))->orderBy('id', 'DESC')->get();
+    }
+
+    public function checkUser($input)
+    {
+        return User::where('id', $input)->count();
+    }
+
+    public function scopeGetUser($query)
+    {
+        return $query->where('is_admin', config('setting.admin'))->orderBy('id', 'DESC')->get();
+    }
     
 }
