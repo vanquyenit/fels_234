@@ -10,6 +10,7 @@ use App\Models\Lesson;
 use App\Models\Learned;
 use App\Models\User;
 use DB;
+use Session;
 use Illuminate\Database\Query\Builder;
 
 class IndexController extends Controller
@@ -41,7 +42,7 @@ class IndexController extends Controller
     {
         $idUser = Auth()->id();
         $arCourse = $this->learned->getScores($idUser);
-        view()->share('arCourse', $arCourse);
+        Session::put('arCourse', $arCourse );
         $arLearns = $this->learned->getCourse($idUser);
         $arRelationship = $this->user->getFollow($idUser);
         return view('index.home', compact('arLearns', 'arRelationship'));

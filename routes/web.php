@@ -99,9 +99,13 @@ Route::group(['middleware' => 'auth'],function(){
         'as'=>'member.following',
         'uses'=>'UserController@following',
     ]);
-    Route::get('user/{slug}', [
-        'as'=>'user.index',
+    Route::get('users/{slug}', [
+        'as'=>'users.index',
         'uses'=>'UserController@index',
+    ]);
+    Route::get('courses/{value?}', [
+        'as'=>'course.index',
+        'uses'=>'CourseController@index',
     ]);
     Route::get('courses/{id}/{content}', [
         'as'=>'course.course',

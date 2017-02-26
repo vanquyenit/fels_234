@@ -4,8 +4,8 @@
 <p id='error' class="hidden"></p>
 @php
 $arsUser = Auth()->user();
+$arCourse = Session::get('arCourse');
 @endphp
-
 <div id="fb-root"></div>
 <div id="header" class="header-v2">
     <div class="header-row container">
@@ -71,7 +71,7 @@ $arsUser = Auth()->user();
                     </li>
                     <hr>
                     <li class="profile-row profile-links">
-                        <a href="{{ route('user.index', $arsUser['username']) }}" class="profile-link">
+                        <a href="{{ route('users.index', $arsUser['username']) }}" class="profile-link">
                         <i class="profile-link-icon link-icon-1"></i>
                         <span class="profile-link-text">{{ trans('layout.profile') }}</span>
                         </a>
