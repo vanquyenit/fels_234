@@ -55,7 +55,7 @@ class LoginController extends Controller
             'password' => $request->password,
             'is_admin' => config('setting.admin'),
         ];
-        
+
         if (Auth::attempt($login)) {
             return redirect()->action('Admin\IndexController@index');
         } else {
@@ -65,5 +65,4 @@ class LoginController extends Controller
             ]);
         }
     }
-    
 }

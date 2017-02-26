@@ -61,10 +61,10 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => trans('language.admin.unauthenticated')], 401);
         }
 
-        if (Request::segment(1) == trans('language.admin.admin')) {
-           return redirect()->guest('./auth/login');
+        if (Request::segment(1) == trans('language.admin.segment_admin')) {
+            return redirect()->guest('./auth/login');
         } else {
-           return redirect()->guest('/');
+            return redirect()->guest('/');
         }
-    } 
+    }
 }
