@@ -96,7 +96,7 @@ class CategoryController extends Controller
     {
         $category = $this->category->find($id);
         $category->name = $request->name;
-        $category->save();
+
         if ($category->save()) {
             return redirect()->action('Admin\CategoryController@index')->with([
                 'flash_level' => trans('category.cate.success'),

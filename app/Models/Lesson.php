@@ -8,9 +8,9 @@ class Lesson extends Model
 {
     protected $fillable = [
         'name',
-        'image', 
-        'course_id', 
-        'level', 
+        'image',
+        'course_id',
+        'level',
     ];
 
     public $timestamps = true;
@@ -33,13 +33,15 @@ class Lesson extends Model
 
     public static function getList()
     {
-        return Lesson::with(
-            [
-                'course' => function ($query) {
-                    $query->orderBy('created_at', 'desc');
-                }
-            ]
-        )->get();
+        return Lesson::with([
+            'course' => function ($query) {
+                $query->orderBy('created_at', 'desc');
+            }
+        ])->get();
     }
 
+    public function checkLesson($input)
+    {
+        return Lesson::where('course_id', $input)->count();
+    }
 }
