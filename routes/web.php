@@ -46,13 +46,14 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'auth'], function() {
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth'], function() {
 
     Route::resource('index', 'IndexController');
+    Route::resource('/', 'IndexController');
 
     Route::resource('category', 'CategoryController');
     Route::post('category/delete', [
         'as' => 'admin.category.postDelete',
         'uses' => 'CategoryController@postDelete',
     ]);
-    
+
     Route::get('user/member', [
         'as' => 'admin.user.getMember',
         'uses' => 'UserController@getMember',
