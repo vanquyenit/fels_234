@@ -91,3 +91,6 @@ h3.icon-box-title {
 button.next-button {
     display: inline-block;
 }
+.progress-bar{
+    max-width: 100%;
+}

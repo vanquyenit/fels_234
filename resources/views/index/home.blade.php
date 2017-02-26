@@ -1,7 +1,8 @@
 @extends('templates.public.template')
 @section('content')
 @php
-$arsUser=Auth::user();
+$arsUser = Auth::user();
+$arCourse = Session::get('arCourse');
 @endphp
 <div id="content">
     <div class="container container-main">
@@ -18,11 +19,11 @@ $arsUser=Auth::user();
                     </div>
                     <div class="content-stats">
                         <div class="left">
-                            <p class="number js-num">1</p>
+                            <p class="number js-num">{{ $arCourse->total == NULL ? "0" : $arCourse->total }}</p>
                             <p class="text">{{  trans('layout.learn_about') }}</p>
                         </div>
                         <div class="right">
-                            <p class="number js-num">1</p>
+                            <p class="number js-num">{{ $arCourse->correct == NULL ? "0" : $arCourse->correct }}</p>
                             <p class="text"> {{  trans('layout.scores') }} </p>
                         </div>
                     </div>
@@ -37,70 +38,74 @@ $arsUser=Auth::user();
         <div class="tabbed-main page col-xs-8">
             <section>
                 <div class="course-cards-component js-course-cards-component">
-                    @foreach ($arLearns as $key => $value)
-                    <div class="course-card-container js-course-card-container" id="{{ $value['course_id'] }}">
-                        <div class="course-progress-box">
-                            <div class="card-top col-xs-12">
-                                <div class="card-image-col col-xs-2">
-                                    <a href="{{ action('CourseController@course', [$value['course_id'], str_slug($value['course_name'])] ) }}">
-                                        <div class="img-crop">
-                                            <img src="{{ asset(Storage::url($value['course_image'])) }}" class="course-photo">
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="card-main-container col-xs-10">
-                                    <div class="top-main">
-                                        <div class="wrapper">
-                                            <div class="detail">
-                                                <p title="{{ $value['course_name']}}" class="title">
-                                                    <a href="{{ action('CourseController@course', [$value['course_id'], str_slug($value['course_name'])] ) }}">{{ $value['course_name']}}</a>
-                                                </p>
+                    @if($arLearns)
+                        @foreach ($arLearns as $key => $value)
+                        <div class="course-card-container js-course-card-container" id="{{ $value['course_id'] }}">
+                            <div class="course-progress-box">
+                                <div class="card-top col-xs-12">
+                                    <div class="card-image-col col-xs-2">
+                                        <a href="{{ action('CourseController@course', [$value['course_id'], str_slug($value['course_name'])] ) }}">
+                                            <div class="img-crop">
+                                                <img src="{{ asset(Storage::url($value['course_image'])) }}" class="course-photo">
                                             </div>
-                                            <div class="pull-right">
-                                                <a href="javascript:void(0)">
-                                                    <span class="simple-btn leaderboard-btn">
-                                                    <span class="leaderboard-icon"></span>
-                                                    </span>
-                                                </a>
-                                                <span class="ctrl-btn">
-                                                <span class="icon"></span>
-                                                    <ul class="tooltip">
-                                                        <li><a href="{{ action('CourseController@course', [$value['course_id'], str_slug($value['course_name'])] ) }}" class="option-btn">
-                                                        <i class="option-pin"></i>
-                                                            {{ trans('layout.info_course') }}</a>
-                                                        </li>
-                                                        <li>
-                                                        <span class="option-btn delete_course" data-id="{{ $value['course_id']}}">
-                                                        <i class="option-delete"></i>{{ trans('layout.remove_course') }}</span>
-                                                        </li>
-                                                    </ul>
-                                                </span>
-                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="card-main-container col-xs-10">
+                                        <div class="top-main">
                                             <div class="wrapper">
-                                                <div class="course-progress">
-                                                    <div class="right"><span>{{ trans('layout.learned') .  $value['resutl']}} / {{ $value['total'] .  trans('layout.char')}} </span> </div>
-                                                    <div class="progress-bar-container">
-                                                        <div  class="progress-bar" data-progress="{{ ($value['resutl'] / $value['total'] ) * 100 }}"></div>
+                                                <div class="detail">
+                                                    <p title="{{ $value['course_name']}}" class="title">
+                                                        <a href="{{ action('CourseController@course', [$value['course_id'], str_slug($value['course_name'])] ) }}">{{ $value['course_name']}}</a>
+                                                    </p>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="simple-btn leaderboard-btn">
+                                                        <span class="leaderboard-icon"></span>
+                                                        </span>
+                                                    </a>
+                                                    <span class="ctrl-btn">
+                                                    <span class="icon"></span>
+                                                        <ul class="tooltip">
+                                                            <li><a href="{{ action('CourseController@course', [$value['course_id'], str_slug($value['course_name'])] ) }}" class="option-btn">
+                                                            <i class="option-pin"></i>
+                                                                {{ trans('layout.info_course') }}</a>
+                                                            </li>
+                                                            <li>
+                                                            <span class="option-btn delete_course" data-id="{{ $value['course_id']}}">
+                                                            <i class="option-delete"></i>{{ trans('layout.remove_course') }}</span>
+                                                            </li>
+                                                        </ul>
+                                                    </span>
+                                                </div>
+                                                <div class="wrapper">
+                                                    <div class="course-progress">
+                                                        <div class="right"><span>{{ trans('layout.learned') .  $value['resutl']}} / {{ $value['total'] .  trans('layout.char')}} </span> </div>
+                                                        <div class="progress-bar-container">
+                                                            <div  class="progress-bar" data-progress="{{ ($value['resutl'] / $value['total'] ) * 100 }}"></div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card-bottom">
-                                <div class="course-actions">
-                                    <a href="{{ action('CourseController@review', [$value['course_id'], trans('layout.url.review') ]) }}" title="" data-toggle="tooltip" data-placement="bottom" class="button blue">
-                                       <span class="text">{{ trans('layout.review') }} ({{ $value['total'] }})</span>
-                                   </a>
-                                   <a href="{{ action('CourseController@course', [$value['course_id'], str_slug($value['course_name'])] ) }}" title="" data-toggle="tooltip" data-placement="bottom" class="button green" >
-                                    <span class="text">{{ trans('layout.startlearn') }}</span>
-                                </a>
+                                <div class="card-bottom">
+                                    <div class="course-actions">
+                                        <a href="{{ action('CourseController@review', [$value['course_id']]) }}" title="" data-toggle="tooltip" data-placement="bottom" class="button blue">
+                                           <span class="text">{{ trans('layout.review') }} ({{ $value['resutl'] }})</span>
+                                       </a>
+                                       <a href="{{ action('CourseController@course', [$value['course_id'], str_slug($value['course_name'])] ) }}" title="" data-toggle="tooltip" data-placement="bottom" class="button green" >
+                                        <span class="text">{{ trans('layout.startlearn') }}</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                @endforeach
+                    @endforeach
+                @else
+                <h2 class="text-center"><a href="{{ route('course.view') }}" title="">{{ trans('layout.noCourse') }}</a></h2>
+                @endif
             </div>
         </section>
         <section>

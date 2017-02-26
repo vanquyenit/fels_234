@@ -19,6 +19,10 @@ class Category extends Model
 
     public function getCourse($id)
     {
-        return Category::with('courses')->find($id);
+        return Category::with(['courses' => function($query) {
+            $query->with(['lessons' => function ($sql) {
+                $sql->with('lessonWords');
+            }]);
+        }])->where('categories.id', $id)->first();
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Auth;
 
 class User extends Authenticatable
 {
@@ -69,18 +70,23 @@ class User extends Authenticatable
         return $query->where('is_admin', config('setting.admin'))->orderBy('id', 'DESC')->get();
     }
 
-    public function scopeLogin($query, $email)
+    public function checkRegister($email)
     {
-        return $query->where('email', $email)->get();
+        return User::where('email', $email)->first();
     }
 
     public static function getFollow($id)
     {
-        return User::where('id', '!=', $id)->whereNotIn('id', function($query){
-            $query->select('follower_id')
-            ->from(with(new Relationship)->getTable())
-            ->where('following_id', Auth()->id());
-        })->take(10)->get();
+        $whereData = [
+            ['is_admin', '2'],
+            ['id', '<>', $id]
+        ];
+        return User::where($whereData)
+            ->whereNotIn('id', function($query){
+                $query->select('follower_id')
+                ->from('relationships')
+                ->where('following_id', Auth::user()->id);
+            })->take(config('setting.following'))->get();
     }
 
     public function checkProvider($id)
@@ -93,4 +99,8 @@ class User extends Authenticatable
         return User::where('username', $username)->first();
     }
 
+    public function setPasswordAttribute($value)
+    {
+        return $this->attributes['password'] = bcrypt($value);
+    }
 }
