@@ -16,25 +16,27 @@ class Course extends Model
 
     public $timestamps = true;
 
-    public function learneds ()
+    public function learneds()
     {
         return $this->hasMany(Learned::class);
     }
 
-    public function category ()
+    public function category()
     {
         return $this->belongsTo(Category::class);
     }
 
     public static function getList()
     {
-        return Course::with(
-            [
-                'category' => function ($query) {
-                    $query->orderBy('created_at', 'desc');
-                }
-            ]
-        )->get();
+        return Course::with([
+            'category' => function ($query) {
+                $query->orderBy('created_at', 'desc');
+            }
+        ])->get();
     }
 
+    public function checkCourse($input)
+    {
+        return Course::where('id', $input)->count();
+    }
 }
