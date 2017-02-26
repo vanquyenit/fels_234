@@ -2,6 +2,7 @@
 <p id='error' class="hidden">{{ Session::get("result")}}</p>
 @else
 <p id='error' class="hidden"></p>
+@endif
 @php
 $arsUser = Auth()->user();
 $arCourse = Session::get('arCourse');
@@ -9,7 +10,7 @@ $arCourse = Session::get('arCourse');
 <div id="fb-root"></div>
 <div id="header" class="header-v2">
     <div class="header-row container">
-        <a class="header-logo" href="/" title="{{ trans('layout.home') }}">
+        <a class="header-logo" href="{{ route('index') }}" title="{{ trans('layout.home') }}">
             <span class="header-logo-wrapper">
               <img src="{{ asset('/images/logo.png') }}" alt="">
           </span>
@@ -33,12 +34,12 @@ $arCourse = Session::get('arCourse');
            @if(isset($arsUser))
            <ul class="header-nav">
             <li class="header-nav-item plain is-active">
-                <a href="{{ route('index.index') }}" class="nav-item-btn">
+                <a href="{{ route('index') }}" class="nav-item-btn">
                     <span class="nav-item-btn-text">{{ trans('layout.home') }}</span>
                 </a>
             </li>
             <li class="header-nav-item plain ">
-                <a href="{{ route('course.index') }}" class="nav-item-btn">
+                <a href="{{ route('course.view') }}" class="nav-item-btn">
                     <span class="nav-item-btn-text">{{ trans('layout.course') }}</span>
                 </a>
             </li>
@@ -90,6 +91,5 @@ $arCourse = Session::get('arCourse');
         @endif
     </div>
 </div>
-@endif
 <div id="wrapper-container" class="wrapper-container">
     <div class="content-pusher">

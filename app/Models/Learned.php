@@ -10,6 +10,9 @@ class Learned extends Model
     protected $fillable = [
         'user_id',
         'course_id',
+        'lesson_id',
+        'lesson_word_id',
+        'correct',
     ];
 
     public $timestamps = true;
@@ -44,7 +47,7 @@ class Learned extends Model
         if (count($arLearn) > 0) {
             foreach($arLearn as $key => $value)
             {
-                $countLesson = Lesson::join('lesson_words', 'lessons.id', '=', 'lesson_words.lesson_id')
+                $countLesson = Lesson::with('lesson_words')
                     ->where('lessons.course_id', $value->course_id)
                     ->count();
                 $arLearns[] = [
@@ -70,6 +73,35 @@ class Learned extends Model
 
     public function getMemberLearn($id)
     {
-        return Learned::where('course_id', $id)->groupBy('user_id')->get();
+        return Learned::where('course_id', $id)
+            ->groupBy('user_id')->get();
+    }
+
+    public function getUserLearnLesson($id, $idUser)
+    {
+        return Learned::where('course_id', $id)
+            ->where('user_id', $idUser)
+            ->first();
+    }
+
+    public function getLearn($id, $idUser)
+    {
+        return Learned::with('lesson_words')
+            ->where(['lesson_id' => $id, 'user_id' => $idUser ])
+            ->count();
+    }
+
+    public function getLearnOfCourse($id, $idUser)
+    {
+        return Learned::select(DB::raw('count(learneds.course_id) as number'))
+            ->with('courses')
+            ->where('course_id', $id)
+            ->where('user_id', $idUser)
+            ->first();
+    }
+
+    public function getReview($id, $idUser)
+    {
+        return Learned::where('user_id', $idUser)->where('course_id', $id)->paginate(10);
     }
 }

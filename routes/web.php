@@ -83,10 +83,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
 });
 
 Route::get('/', [
-    'as'=>'index.index',
+    'as'=>'index',
     'uses'=>'IndexController@index',
 ]);
-Route::group(['middleware' => 'auth'],function(){
+Route::group(['middleware' => 'auth'], function () {
     Route::get('home', [
         'as'=>'index.home',
         'uses'=>'IndexController@home',
@@ -104,37 +104,49 @@ Route::group(['middleware' => 'auth'],function(){
         'uses'=>'UserController@index',
     ]);
     Route::get('courses/{value?}', [
-        'as'=>'course.index',
-        'uses'=>'CourseController@index',
+        'as'=>'course.view',
+        'uses'=>'CourseController@view',
     ]);
     Route::get('courses/{id}/{content}', [
         'as'=>'course.course',
         'uses'=>'CourseController@course',
     ]);
+    Route::get('courses/{id}/review', [
+        'as'=>'course.review',
+        'uses'=>'CourseController@review',
+    ]);
     Route::get('courses/{id}/{content}/{action}', [
         'as'=>'course.learned',
         'uses'=>'CourseController@learned',
     ]);
+    Route::get('courses/{id}/{slug}/{id_lesson}/{lesson}', [
+        'as'=>'course.lesson',
+        'uses'=>'CourseController@lesson',
+    ]);
+    Route::get('courses/{id}/{slug}/{id_lesson}/{lesson}/{action}', [
+        'as'=>'learn.action',
+        'uses'=>'LearnController@index',
+    ]);
 });
-Route::get('provider/{provider}',[
+Route::get('provider/{provider}', [
     'as' => 'auth.provider.login',
     'uses' => 'Auth\RegisterController@redirectToProvider',
 ]);
-Route::get('provider/{provider}/callback',[
+Route::get('provider/{provider}/callback', [
     'as' => 'auth.provider.callback',
     'uses' => 'Auth\RegisterController@handleProviderCallback',
 ]);
-Route::post('login',[
+Route::post('login', [
     'as' => 'auth.auth.login',
     'uses' => 'Auth\LoginController@postLogin',
 ]);
-Route::post('register',[
+Route::post('register', [
     'as' => 'auth.auth.register',
     'uses' => 'Auth\RegisterController@postRegister',
 ]);
-Route::get('logout',[
+Route::get('logout', [
     'as' => 'auth.auth.logout',
-    function(){
+    function () {
         Auth::logout();
         return Redirect::to('/');
     }

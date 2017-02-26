@@ -21,6 +21,11 @@ class Course extends Model
         return $this->hasMany(Learned::class);
     }
 
+    public function lessons()
+    {
+        return $this->hasMany(Lesson::class);
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -43,5 +48,10 @@ class Course extends Model
     public function getCat()
     {
         return Course::with('category')->paginate(4);
+    }
+
+    public function getLesson($id)
+    {
+        return Course::with('lessons')->find($id);
     }
 }
