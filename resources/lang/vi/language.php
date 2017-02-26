@@ -65,6 +65,7 @@ return [
         'segment_admin' => 'admin',
         'word' => 'Tất cả từ vựng',
         'statistics' => 'Thôngs kê',
+        'index' => 'Chào mừng bạn đến với trang quản trị',
     ],
 
 ];

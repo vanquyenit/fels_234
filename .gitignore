@@ -9,3 +9,4 @@ Homestead.yaml
 public/bower_components/
 .bowerrc
 bower.json
+composer.lock

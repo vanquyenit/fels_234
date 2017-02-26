@@ -1,0 +1,33 @@
+<?php
+
+return [
+    'lessons' => [
+        'lessons_list' => 'Danh sách bài học',
+        'all_lessons' => 'Tất cả bài học',
+        'add_lessons' => 'Thêm bài học',
+        'lesson' => 'Bài học',
+        'delete_complete' => 'Xóa dữ liệu thành công !!!',
+        'edit_lesson' =>'Sửa bài học',
+        'add_complete' => 'Thêm dữ liệu thành công !!!',
+        'category_course' => 'Danh mục khóa học',
+        'category_lesson' => 'Cấp độ bài học',
+        'category_word' => 'Số từ của bài',
+        'no_avatar' => 'Chưa có hình',
+        'add_word' => 'Từ',
+        'select_coures' => '-- Chọn khóa học --',
+        'select_lesson' => '-- chọn số thứ tự bài --',
+        'select_word' => '-- Chọn số từ của bài --',
+        'meaning_words' => 'Nghĩa của từ',
+        'course' => 'Khóa học',
+        'image' => 'Hình ảnh',
+        'edit_complete' => 'Sửa dữ liệu thành công !!!',
+        'delete' => 'Xóa',
+        'stt' => 'STT',
+        'error' => 'có lỗi xảy ra !!!',
+        'edit' => 'Sửa',
+        'cancel' => 'Hủy',
+        'add' => 'Thêm',
+        'danger' => 'danger',
+        'success' => 'success',
+    ],
+];
