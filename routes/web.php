@@ -10,6 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::pattern('id', '[0-9]+');
+Route::pattern('id_lesson', '[0-9]+');
+Route::pattern('slug', '.+');
+
 Route::group(['namespace' => 'Auth', 'prefix' => 'auth'], function() {
     Route::get('login', [
         'as' => 'auth.getLoginAdmin',
@@ -77,3 +81,42 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
     ]);
 
 });
+
+Route::get('/', [
+    'as'=>'index.index',
+    'uses'=>'IndexController@index',
+]);
+Route::group(['middleware' => 'auth'],function(){
+    Route::get('home', [
+        'as'=>'index.home',
+        'uses'=>'IndexController@home',
+    ]);
+    Route::get('home', [
+        'as'=>'user.setting',
+        'uses'=>'IndexController@home',
+    ]);
+});
+Route::get('provider/{provider}',[
+    'as' => 'auth.provider.login',
+    'uses' => 'Auth\RegisterController@redirectToProvider',
+]);
+Route::get('provider/{provider}/callback',[
+    'as' => 'auth.provider.login',
+    'uses' => 'Auth\RegisterController@handleProviderCallback',
+]);
+Route::post('login',[
+    'as' => 'auth.auth.login',
+    'uses' => 'Auth\LoginController@postLogin',
+]);
+Route::post('register',[
+    'as' => 'auth.auth.register',
+    'uses' => 'Auth\RegisterController@postRegister',
+]);
+Route::get('logout',[
+    'as' => 'auth.auth.logout',
+    function(){
+        Auth::logout();
+        return Redirect::to('/');
+    }
+]);
+
