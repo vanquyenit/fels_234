@@ -39,4 +39,9 @@ class Course extends Model
     {
         return Course::where('id', $input)->count();
     }
+
+    public function getCat()
+    {
+        return Course::with('category')->paginate(4);
+    }
 }
