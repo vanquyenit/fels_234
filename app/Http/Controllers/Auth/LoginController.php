@@ -32,15 +32,17 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = './auth/login';
+    protected $user;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(User $user)
     {
         $this->middleware('guest', ['except' => 'logout']);
+        $this->user = $user;
     }
 
     public function getLoginAdmin()

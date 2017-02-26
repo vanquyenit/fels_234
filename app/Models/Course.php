@@ -1,4 +1,4 @@
-<?php
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <?php
 
 namespace App\Models;
 
@@ -38,5 +38,10 @@ class Course extends Model
     public function checkCourse($input)
     {
         return Course::where('id', $input)->count();
+    }
+
+    public function getCat()
+    {
+        return Course::with('category')->paginate(4);
     }
 }
