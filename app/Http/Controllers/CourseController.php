@@ -80,7 +80,6 @@ class CourseController extends Controller
         } else {
             return redirect()->action('IndexController@index')->with(['result' => trans('layout.notsearch')]);
         }
-
     }
     public function review($id)
     {
@@ -95,4 +94,3 @@ class CourseController extends Controller
         return view('course.review', compact('arReview', 'getReview'));
     }
 }
-

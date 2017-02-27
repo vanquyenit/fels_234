@@ -88,7 +88,7 @@
         <!-- /footer content -->
       </div>
     </div>
-    
+
     {{ Html::script('bower_components/jquery/dist/jquery.min.js') }}
     {{ Html::script('bower_components/bootstrap/dist/js/bootstrap.min.js') }}
     {{ Html::script('bower_components/datatables.net/js/jquery.dataTables.min.js') }}

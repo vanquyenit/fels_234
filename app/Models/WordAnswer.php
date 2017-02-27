@@ -14,13 +14,20 @@ class WordAnswer extends Model
 
     public $timestamps = true;
 
-    public function lessonWords ()
+    public function lessonWords()
     {
         return $this->hasMany(LessonWord::class);
     }
 
-    public function word ()
+    public function word()
     {
         return $this->belongsTo(Word::class);
+    }
+
+    public function updateWordAnswer($meaningWordUpdate)
+    {
+        foreach ($meaningWordUpdate as $key => $value) {
+            WordAnswer::where('id', '=', $key)->update(['content' => $value]);
+        }
     }
 }

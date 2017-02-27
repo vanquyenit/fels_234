@@ -17,22 +17,22 @@ class Learned extends Model
 
     public $timestamps = true;
 
-    public function user ()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function course ()
+    public function course()
     {
         return $this->belongsTo(Course::class);
     }
 
-    public function lesson ()
+    public function lesson()
     {
         return $this->belongsTo(Lesson::class);
     }
 
-    public function lessonWord ()
+    public function lessonWord()
     {
         return $this->belongsTo(LessonWord::class);
     }
@@ -43,10 +43,11 @@ class Learned extends Model
             $query->with(['lessons' => function ($query) {
                 $query->with('lessonWords');
             }]);
-        }])->select('*',DB::raw('count(learneds.course_id) as resutl'))
+        }])->select('*', DB::raw('count(learneds.course_id) as resutl'))
             ->where('user_id', $id_user)
             ->groupBy('learneds.course_id')
             ->get();
+        $arLearns = [];
         foreach ($arLearn as $value) {
             $total =0;
             foreach ($value->course->lessons as $ab) {
@@ -88,6 +89,11 @@ class Learned extends Model
         return Learned::with('lesson_words')
             ->where(['lesson_id' => $id, 'user_id' => $idUser ])
             ->count();
+    }
+
+    public function checkLessonWord($id)
+    {
+        return Learned::where(['lesson_word_id' => $id])->get();
     }
 
     public function getLearnOfCourse($id, $idUser)

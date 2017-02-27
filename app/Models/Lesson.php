@@ -33,11 +33,7 @@ class Lesson extends Model
 
     public function getList()
     {
-        return Lesson::with([
-            'course' => function ($query) {
-                $query->orderBy('created_at', 'desc');
-            }
-        ])->get();
+        return Lesson::with('course')->orderBy('created_at', 'desc')->get();
     }
 
     public function checkLesson($id)
@@ -55,5 +51,17 @@ class Lesson extends Model
     public function getFirstLesson($id)
     {
         return Lesson::where('course_id', $id)->first()->level;
+    }
+
+    public function getLessonInfo($id)
+    {
+        return Lesson::find($id);
+    }
+
+    public function getLessonWord($id)
+    {
+        return Lesson::with(['lessonWords' => function ($query) {
+            $query->with('word', 'wordAnswer');
+        }])->where('lessons.id', $id)->first();
     }
 }

@@ -13,13 +13,20 @@ class Word extends Model
 
     public $timestamps = true;
 
-    public function lessonWords ()
+    public function lessonWords()
     {
         return $this->hasMany(LessonWord::class);
     }
 
-    public function wordAnswers ()
+    public function wordAnswers()
     {
         return $this->hasMany(WordAnswer::class);
+    }
+
+    public function updateWord($wordUpdate)
+    {
+        foreach ($wordUpdate as $key => $value) {
+            Word::where('id', '=', $key)->update(['content' => $value]);
+        }
     }
 }

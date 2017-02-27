@@ -14,7 +14,7 @@ Route::pattern('id', '[0-9]+');
 Route::pattern('id_lesson', '[0-9]+');
 Route::pattern('slug', '.+');
 
-Route::group(['namespace' => 'Auth', 'prefix' => 'auth'], function() {
+Route::group(['namespace' => 'Auth', 'prefix' => 'auth'], function () {
     Route::get('login', [
         'as' => 'auth.getLoginAdmin',
         'uses' => 'LoginController@getLoginAdmin',
@@ -24,7 +24,7 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'auth'], function() {
         'uses' => 'LoginController@postLoginAdmin',
     ]);
     Route::get('logout', [
-        'as' => 'auth.getLogoutAdmin', function() {
+        'as' => 'auth.getLogoutAdmin', function () {
             Auth::logout();
             return redirect()->route('auth.getLoginAdmin');
         }
@@ -79,7 +79,6 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
         'as' => 'admin.course.postDelete',
         'uses' => 'CourseController@postDelete',
     ]);
-
 });
 
 Route::get('/', [
@@ -163,4 +162,3 @@ Route::get('logout', [
         return redirect()->action('IndexController@index');
     }
 ]);
-

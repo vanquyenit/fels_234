@@ -29,5 +29,11 @@ return [
         'add' => 'Thêm',
         'danger' => 'danger',
         'success' => 'success',
+        'error_name' => 'Vui lòng nhập tên bài học',
+        'exits_name' => 'Tên bài học đã có',
+        'error_course' => 'Vui lòng chọn khóa học',
+        'error_level' => 'Vui lòng chọn cấp độ',
+        'error_nember' => 'Vui lòng chọn thứ tự bài',
+        'error_images' => 'Vui lòng chọn ảnh',
     ],
 ];
