@@ -67,4 +67,27 @@ class LoginController extends Controller
             ]);
         }
     }
+
+    public function postLogin(Request $request)
+    {
+        $email = $request->email;
+        $password = $request->password;
+        $user = $this->user->Login($email);
+        if (count($user) == 0) {
+            return redirect()->action('IndexController@index')
+                ->with(['result' => trans('layout.not_register')]);
+        } else if (Auth::attempt(
+            [
+                'email' => $email,
+                'password' => $password,
+                'is_admin' => config('setting.member'),
+            ]))
+        {
+            return redirect()->action('IndexController@home');
+        } else {
+            return redirect()->action('IndexController@index')
+                ->with(['result' => trans('layout.fail')]);
+        }
+
+    }
 }

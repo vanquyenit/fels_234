@@ -95,13 +95,29 @@ Route::group(['middleware' => 'auth'],function(){
         'as'=>'user.setting',
         'uses'=>'IndexController@home',
     ]);
+    Route::post('following', [
+        'as'=>'member.following',
+        'uses'=>'UserController@following',
+    ]);
+    Route::get('user/{slug}', [
+        'as'=>'user.index',
+        'uses'=>'UserController@index',
+    ]);
+    Route::get('courses/{id}/{content}', [
+        'as'=>'course.course',
+        'uses'=>'CourseController@course',
+    ]);
+    Route::get('courses/{id}/{content}/{action}', [
+        'as'=>'course.learned',
+        'uses'=>'CourseController@learned',
+    ]);
 });
 Route::get('provider/{provider}',[
     'as' => 'auth.provider.login',
     'uses' => 'Auth\RegisterController@redirectToProvider',
 ]);
 Route::get('provider/{provider}/callback',[
-    'as' => 'auth.provider.login',
+    'as' => 'auth.provider.callback',
     'uses' => 'Auth\RegisterController@handleProviderCallback',
 ]);
 Route::post('login',[
