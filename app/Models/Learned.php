@@ -67,4 +67,9 @@ class Learned extends Model
         return Learned::select(DB::raw('COUNT(correct) as total,SUM(correct) as correct'))
             ->where('user_id', $idUser)->first();
     }
+
+    public function getMemberLearn($id)
+    {
+        return Learned::where('course_id', $id)->groupBy('user_id')->get();
+    }
 }

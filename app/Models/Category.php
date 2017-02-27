@@ -11,9 +11,14 @@ class Category extends Model
     ];
 
     public $timestamps = true;
-    
+
     public function courses ()
     {
         return $this->hasMany(Course::class);
+    }
+
+    public function getCourse($id)
+    {
+        return Category::with('courses')->find($id);
     }
 }
