@@ -34,4 +34,14 @@ class LessonWord extends Model
     {
         return $this->hasMany(Learned::class);
     }
+
+    public function totalNumber($id)
+    {
+        return LessonWord::where('lesson_id', $id)->count();
+    }
+
+    public function getVocabuary($id)
+    {
+        return LessonWord::with('wordAnswer', 'word')->where('word_id', $id)->first();
+    }
 }

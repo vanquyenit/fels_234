@@ -10,7 +10,7 @@
                 <ul class="categories-list" data-role="tree-navigation">
                     @foreach ($arCat as $element)
                         <li>
-                            <a href="{{ route('course.index', $element['id']) }}">{{ $element['name'] }}</a>
+                            <a href="{{ route('course.view', $element['id']) }}">{{ $element['name'] }}</a>
                         </li>
                     @endforeach
                 </ul>
@@ -50,4 +50,3 @@
     </div>
 </div>
 
-@stop

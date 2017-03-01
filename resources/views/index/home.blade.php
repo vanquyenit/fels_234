@@ -90,10 +90,10 @@ $arsUser=Auth::user();
                             </div>
                             <div class="card-bottom">
                                 <div class="course-actions">
-                                    <a href="{{ action('CourseController@learned', [$value['course_id'], str_slug($value['course_name']), trans('layout.url.review') ]) }}" title="" data-toggle="tooltip" data-placement="bottom" class="button blue">
+                                    <a href="{{ action('CourseController@review', [$value['course_id'], trans('layout.url.review') ]) }}" title="" data-toggle="tooltip" data-placement="bottom" class="button blue">
                                        <span class="text">{{ trans('layout.review') }} ({{ $value['total'] }})</span>
                                    </a>
-                                   <a href="{{ action('CourseController@learned', [$value['course_id'], str_slug($value['course_name']), trans('layout.url.learn') ]) }}" title="" data-toggle="tooltip" data-placement="bottom" class="button green" >
+                                   <a href="{{ action('CourseController@course', [$value['course_id'], str_slug($value['course_name'])] ) }}" title="" data-toggle="tooltip" data-placement="bottom" class="button green" >
                                     <span class="text">{{ trans('layout.startlearn') }}</span>
                                 </a>
                             </div>

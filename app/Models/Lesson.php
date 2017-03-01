@@ -31,7 +31,7 @@ class Lesson extends Model
         return $this->hasMany(Learned::class);
     }
 
-    public static function getList()
+    public function getList()
     {
         return Lesson::with([
             'course' => function ($query) {
@@ -40,8 +40,20 @@ class Lesson extends Model
         ])->get();
     }
 
-    public function checkLesson($input)
+    public function checkLesson($id)
     {
-        return Lesson::where('course_id', $input)->count();
+        return Lesson::where('course_id', $id)->count();
+    }
+
+    public function getAllVocabulary($id)
+    {
+        return Lesson::join('lesson_words', 'lessons.id', '=', 'lesson_words.lesson_id')
+            ->where('lessons.course_id', $id)
+            ->count();
+    }
+
+    public function getFirstLesson($id)
+    {
+        return Lesson::where('course_id', $id)->first()->level;
     }
 }
