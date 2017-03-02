@@ -35,17 +35,17 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function activities ()
+    public function activities()
     {
         return $this->hasMany(Activity::class);
     }
 
-    public function relationships ()
+    public function relationships()
     {
         return $this->hasMany(Relationship::class);
     }
 
-    public function learneds ()
+    public function learneds()
     {
         return $this->hasMany(Learned::class);
     }

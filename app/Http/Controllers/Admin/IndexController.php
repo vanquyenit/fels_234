@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Word;
+use Auth;
 
 class IndexController extends Controller
 {

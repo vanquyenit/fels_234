@@ -15,22 +15,22 @@ class LessonWord extends Model
 
     public $timestamps = true;
 
-    public function lesson ()
+    public function lesson()
     {
         return $this->belongsTo(Lesson::class);
     }
 
-    public function word ()
+    public function word()
     {
         return $this->belongsTo(Word::class);
     }
 
-    public function wordAnswer ()
+    public function wordAnswer()
     {
         return $this->belongsTo(WordAnswer::class);
     }
 
-    public function learneds ()
+    public function learneds()
     {
         return $this->hasMany(Learned::class);
     }
@@ -43,5 +43,10 @@ class LessonWord extends Model
     public function getVocabuary($id)
     {
         return LessonWord::with('wordAnswer', 'word')->where('word_id', $id)->first();
+    }
+
+    public function getLessonWordCount($id)
+    {
+        return LessonWord::where('lesson_id', $id)->count();
     }
 }
