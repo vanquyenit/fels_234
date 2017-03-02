@@ -24,7 +24,7 @@ class Learned extends Model
 
     public function course ()
     {
-        return $this->belongsTo(Word::class);
+        return $this->belongsTo(Course::class);
     }
 
     public function lesson ()
@@ -34,33 +34,32 @@ class Learned extends Model
 
     public function lessonWord ()
     {
-        return $this->belongsTo(Lesson::class);
+        return $this->belongsTo(LessonWord::class);
     }
 
     public function getCourse($id_user)
     {
-        $arLearn = Learned::select('*',DB::raw('count(learneds.course_id) as number'))
-        ->join('courses', 'courses.id', '=', 'learneds.course_id')
-        ->groupBy('learneds.course_id')
-        ->where('user_id', $id_user)
-        ->get();
-        if (count($arLearn) > 0) {
-            foreach($arLearn as $key => $value)
-            {
-                $countLesson = Lesson::with('lesson_words')
-                    ->where('lessons.course_id', $value->course_id)
-                    ->count();
-                $arLearns[] = [
-                    'course_id' => $value->course_id,
-                    'course_name' => $value->name,
-                    'course_image' => $value->image,
-                    'course_describe' => $value->describe,
-                    'resutl' => $value->number,
-                    'total' => $countLesson,
-                ];
+        $arLearn = Learned::with(['course' => function ($query) {
+            $query->with(['lessons' => function ($query) {
+                $query->with('lessonWords');
+            }]);
+        }])->select('*',DB::raw('count(learneds.course_id) as resutl'))
+            ->where('user_id', $id_user)
+            ->groupBy('learneds.course_id')
+            ->get();
+        foreach ($arLearn as $value) {
+            $total =0;
+            foreach ($value->course->lessons as $ab) {
+                $total = $ab->lessonWords->count() + $total;
             }
-        } else {
-            $arLearns = [];
+            $arLearns[] = [
+                'course_id' => $value->course_id,
+                'course_name' => $value->course->name,
+                'course_image' => $value->course->image,
+                'course_describe' => $value->course->describe,
+                'resutl' => $value->resutl,
+                'total' => $total
+            ];
         }
         return $arLearns;
     }
@@ -94,7 +93,7 @@ class Learned extends Model
     public function getLearnOfCourse($id, $idUser)
     {
         return Learned::select(DB::raw('count(learneds.course_id) as number'))
-            ->with('courses')
+            ->with('course')
             ->where('course_id', $id)
             ->where('user_id', $idUser)
             ->first();
@@ -102,6 +101,9 @@ class Learned extends Model
 
     public function getReview($id, $idUser)
     {
-        return Learned::where('user_id', $idUser)->where('course_id', $id)->paginate(10);
+        return Learned::join('lesson_words', 'lesson_words.id', '=', 'learneds.lesson_word_id')
+            ->join('words', 'words.id', '=', 'lesson_words.word_id')
+            ->join('word_answers', 'word_answers.id', '=', 'lesson_words.word_answer_id')
+            ->where('user_id', $idUser)->where('course_id', $id)->paginate(config('setting.review'));
     }
 }

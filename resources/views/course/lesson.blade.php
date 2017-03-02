@@ -61,19 +61,22 @@
                 </div>
                 <div class="levels clearfix row">
                     @foreach ($arCourse->lessons as $element)
+                    @if($element['all'] == 0) @php $all = 1 @endphp
+                    @else @php $all = $element['all']; @endphp
+                    @endif
                     <div class="col-xs-4 col-sm-4 col-lg-2">
                         <a href="{{ action('CourseController@lesson', [$arCourse->id, str_slug($arCourse['name']), $element['level'], str_slug($element['name'])] ) }}" class="level clearfix ">
                             <div class="level-index">{{ $element['level'] }}</div>
                             <div class="level-icon">
                                 <i class="level-ico level-ico-s level-ico-plant"></i>
-                                @if (( $element['learned']/$element['all'] ) == 1)
+                                @if (( $element['learned']/$all ) == 1)
                                     <div class="level-status">
                                         <span class="ico ico-complete ico-correct ico-m ico-green"></span>
                                     </div>
                                 @else
                                     <div class="level-status">
                                         <div class="progress">
-                                            <div class="bar bar-success" data-progress="{{ ($element['learned']/$element['all'])*100 }}"></div>
+                                            <div class="bar bar-success" data-progress="{{ ($element['learned']/$all) * 100 }}"></div>
                                         </div>
                                     </div>
                                 @endif
