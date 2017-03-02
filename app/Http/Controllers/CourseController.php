@@ -44,34 +44,13 @@ class CourseController extends Controller
         }
 
         $arCourse = $this->category->getCourse($id);
-        $arTotal = [];
-
-        if ($arCourse) {
-            if (count($arCourse->courses) > 0) {
-                foreach ($arCourse->courses as $key => $value) {
-                    $count = $this->learned->getMemberLearn($value->id);
-                    $arTotal[] = [
-                        'id' => $value->id,
-                        'cat' => $arCourse->name,
-                        'name' => $value->name,
-                        'image' => $value->image,
-                        'total' => count($count),
-                    ];
-                }
-            } else {
-                return redirect()->action('IndexController@index')->with(['result' => trans('layout.notsearch')]);
-            }
-        } else {
-            return redirect()->action('IndexController@index')->with(['result' => trans('layout.notsearch')]);
-        }
-
-        $arCat = $this->category->all();
-        return view('course.index', compact('arTotal', 'arCat'));
+        $arCat = $this->category->with('courses')->get();
+        return view('course.index', compact('arCourse', 'arCat'));
     }
 
     public function course($id, $slug)
     {
-        $idUser = Auth()->id();
+        $idUser = Auth::user()->id;
         $arCourse = $this->course->getLesson($id);
         $arUserLearn = $this->learned->getUserLearnLesson($id, $idUser);    //get user learned how lesson
 
@@ -103,20 +82,17 @@ class CourseController extends Controller
         }
 
     }
-
     public function review($id)
     {
-        $idUser = Auth()->id();
+        $idUser = Auth::user()->id;
         $getReview = $this->learned->getReview($id, $idUser);
         foreach ($getReview as $key => $value) {
-            $Lesson = $this->lessonWord->getVocabuary($value->lesson_word_id) ;
             $arReview[] = [
-                'word' => $Lesson['word']['content'],
-                'word_answer' => $Lesson['wordAnswer']['content'],
+                'word' => $value['name'],
+                'word_answer' => $value['content'],
             ];
         }
         return view('course.review', compact('arReview', 'getReview'));
     }
-
 }
 

@@ -47,7 +47,7 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'auth'], function() {
     ]);
 });
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth'], function() {
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function() {
 
     Route::resource('index', 'IndexController');
     Route::resource('/', 'IndexController');
@@ -99,21 +99,33 @@ Route::group(['middleware' => 'auth'], function () {
         'as'=>'member.following',
         'uses'=>'UserController@following',
     ]);
+    Route::post('delete', [
+        'as'=>'course.deleteCourse',
+        'uses'=>'LearnController@deleteCourse',
+    ]);
+    Route::post('settings', [
+        'as'=>'user.settings',
+        'uses'=>'UserController@settings',
+    ]);
     Route::get('users/{slug}', [
         'as'=>'users.index',
         'uses'=>'UserController@index',
+    ]);
+    Route::get('activity/{slug}', [
+        'as'=>'relationship.view',
+        'uses'=>'RelationshipController@index',
     ]);
     Route::get('courses/{value?}', [
         'as'=>'course.view',
         'uses'=>'CourseController@view',
     ]);
-    Route::get('courses/{id}/{content}', [
-        'as'=>'course.course',
-        'uses'=>'CourseController@course',
-    ]);
     Route::get('courses/{id}/review', [
         'as'=>'course.review',
         'uses'=>'CourseController@review',
+    ]);
+    Route::get('courses/{id}/{content}', [
+        'as'=>'course.course',
+        'uses'=>'CourseController@course',
     ]);
     Route::get('courses/{id}/{content}/{action}', [
         'as'=>'course.learned',
@@ -147,8 +159,8 @@ Route::post('register', [
 Route::get('logout', [
     'as' => 'auth.auth.logout',
     function () {
-        Auth::logout();
-        return Redirect::to('/');
+        Session::flush();
+        return redirect()->action('IndexController@index');
     }
 ]);
 

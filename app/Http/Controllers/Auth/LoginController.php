@@ -10,6 +10,7 @@ use Socialite;
 use Auth;
 use Hash;
 use App\Models\User;
+use Session;
 
 class LoginController extends Controller
 {
@@ -72,8 +73,9 @@ class LoginController extends Controller
     {
         $email = $request->email;
         $password = $request->password;
-        $user = $this->user->Login($email);
-        if (count($user) == 0) {
+        $user = $this->user->checkRegister($email);
+
+        if (empty($user)) {
             return redirect()->action('IndexController@index')
                 ->with(['result' => trans('layout.not_register')]);
         } else if (Auth::attempt(
@@ -88,6 +90,5 @@ class LoginController extends Controller
             return redirect()->action('IndexController@index')
                 ->with(['result' => trans('layout.fail')]);
         }
-
     }
 }

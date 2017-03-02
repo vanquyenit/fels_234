@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Http\Requests\RegisterRequest;
 use Socialite;
 use Auth;
+use Hash;
 
 class RegisterController extends Controller
 {
@@ -59,32 +60,18 @@ class RegisterController extends Controller
         ]);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return User
-     */
-    protected function create(array $data)
+    public function postRegister(RegisterRequest $request)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
-    }
 
-public function postRegister(RegisterRequest $request)
-    {
-        $arUser = array(
-            'username' => trim($request->username),
-            'fullname' => trim($request->fullname),
-            'email' => trim($request->email),
-            'password' => bcrypt(trim($request->password)),
-            'avatar' => 'user.png',
+        $register = User::create([
+            'username' => $request->username,
+            'fullname' => $request->fullname,
+            'email' => $request->email,
+            'password' => $request->password,
+            'avatar' => trans('layout.avatar'),
             'is_admin' => config('setting.member'),
-        );
-        if ($this->user->insert($arUser)){
+        ]);
+        if ($register){
             return redirect()->action('IndexController@index')->with(['result' => trans('layout.regis.success')]);
         } else {
             return redirect()->action('IndexController@index')->with(['result' => trans('layout.regis.error')]);
@@ -126,6 +113,7 @@ public function postRegister(RegisterRequest $request)
             } else {
                 $username = $socialUser->getId();
             }
+
             $img = file_get_contents($socialUser->avatar_original);
             $file = storage_path() . '/app/public/' . $socialUser->getId() . '.jpg';
             file_put_contents($file, $img);

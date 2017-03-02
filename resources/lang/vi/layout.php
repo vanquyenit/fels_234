@@ -1,6 +1,8 @@
 <?php
     return [
         'title' => 'Elearning',
+        'avatar' => 'user.png',
+        'activity' => 'Hoạt động',
         'login' => 'Đăng nhập',
         'home' => 'Trang chủ',
         'course' => 'Khóa học',
@@ -34,6 +36,7 @@
         'notsearch' => 'Không tìm thấy kết quả',
         'total_user' => ' người đang tham gia khóa học này ',
         'next' => 'Tiếp',
+        'noCourse' => 'Bạn chưa học khóa học nào ! Click ngay để đến các khóa học dành cho bạn',
         'confirm' => 'Bạn chắc chắn muốn xóa',
         'url' => [
             'google' => 'google/',

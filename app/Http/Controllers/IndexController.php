@@ -32,19 +32,22 @@ class IndexController extends Controller
     public function index()
     {
         if (Auth::user()) {
-            return redirect('home');
+            return redirect()->action('IndexController@home');
         }
+
         $arCategory = $this->course->getCat();
+
         return view('index.index', compact('arCategory'));
     }
 
     public function home()
     {
-        $idUser = Auth()->id();
+        $idUser = Auth::user()->id;
         $arCourse = $this->learned->getScores($idUser);
         Session::put('arCourse', $arCourse );
         $arLearns = $this->learned->getCourse($idUser);
         $arRelationship = $this->user->getFollow($idUser);
+
         return view('index.home', compact('arLearns', 'arRelationship'));
     }
 }
