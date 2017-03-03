@@ -47,7 +47,7 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'auth'], function () {
     ]);
 });
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function() {
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function () {
 
     Route::resource('index', 'IndexController');
     Route::resource('/', 'IndexController');
@@ -109,6 +109,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('users/{slug}', [
         'as'=>'users.index',
         'uses'=>'UserController@index',
+    ]);
+    Route::post('users/{id}', [
+        'as'=>'users.updateUser',
+        'uses'=>'UserController@updateUser',
     ]);
     Route::get('activity/{slug}', [
         'as'=>'relationship.view',

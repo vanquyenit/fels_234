@@ -73,7 +73,8 @@ h3.icon-box-title {
     height: 10px !important;
 }
 .user-box img {
-    height: 100%;
+    width: 100%;
+    height: 100px;
     max-height: 90%;
 }
 .user-box .username {
@@ -93,4 +94,22 @@ button.next-button {
 }
 .progress-bar{
     max-width: 100%;
+}
+.activitys{
+    padding-bottom: 5%;
+}
+.profile_user{
+    padding: 3%;
+}
+
+.profile_User{
+    color: #eee9dc;
+background: #48b379 !important;
+}
+.relative label{
+  padding-top: 2%;
+}
+.people-rowsa{
+    height: 588px;
+    overflow-y: scroll;
 }

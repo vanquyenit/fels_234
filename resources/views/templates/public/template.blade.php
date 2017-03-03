@@ -21,7 +21,7 @@
     {{ Html::script('bower_components/bootstrap/dist/js/bootstrap.min.js') }}
     {{ Html::script('js/responsivevoice.js') }}
     {{ Html::script('js/custom.js') }}
-
+    {{ Html::script('Admin/js/script.js') }}
 
     @include('templates.public.footer')
 </body>

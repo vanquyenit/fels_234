@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserRequest extends FormRequest
+class UserUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,11 +25,8 @@ class UserRequest extends FormRequest
     {
         return [
             'fullname' => 'required|min:6|max:50',
-            'username' => 'required|min:5|max:30|unique:users,username',
-            'password' => 'required|min:6|max:50',
-            'passwordConfirm' => 'required|same:password',
-            'email' => 'required|unique:users,email|email',
-            'images' => 'required',
+            'username' => 'required|min:5|max:30',
+            'email' => 'required|email',
         ];
     }
 
@@ -47,16 +44,8 @@ class UserRequest extends FormRequest
             'username.required' => trans('language.admin.users.enter_username'),
             'username.min' => trans('language.admin.users.min_username'),
             'username.max' => trans('language.admin.users.max_username'),
-            'username.unique' => trans('language.admin.users.exits_username'),
-            'password.required' => trans('language.admin.users.enter_password'),
-            'password.min' => trans('language.admin.users.enter_password_min'),
-            'password.max' => trans('language.admin.users.enter_password_max'),
-            'passwordConfirm.required' => trans('language.admin.users.enter_res_pasword'),
-            'passwordConfirm.same' => trans('language.admin.users.password_asme'),
             'email.required' => trans('language.admin.users.enter_email'),
-            'email.unique' => trans('language.admin.users.exits_email'),
             'email.email' => trans('language.admin.users.error_email'),
-            'images.required' => trans('language.admin.users.enter_avatar'),
         ];
     }
 }

@@ -14,8 +14,13 @@ class Relationship extends Model
 
     public $timestamps = true;
 
-    public function users ()
+    public function users()
     {
         return $this->hasMany(User::class);
+    }
+
+    public function checkFollow($id)
+    {
+        return Relationship::where('follower_id', $id)->where('following_id', Auth()->id())->select('id')->first();
     }
 }

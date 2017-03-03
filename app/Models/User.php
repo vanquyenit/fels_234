@@ -78,11 +78,12 @@ class User extends Authenticatable
     public static function getFollow($id)
     {
         $whereData = [
-            ['is_admin', '2'],
+            ['is_admin', config('setting.member')],
             ['id', '<>', $id]
         ];
+
         return User::where($whereData)
-            ->whereNotIn('id', function($query){
+            ->whereNotIn('id', function ($query) {
                 $query->select('follower_id')
                 ->from('relationships')
                 ->where('following_id', Auth::user()->id);
@@ -102,5 +103,33 @@ class User extends Authenticatable
     public function setPasswordAttribute($value)
     {
         return $this->attributes['password'] = bcrypt($value);
+    }
+
+    public function getFollower($idUser)
+    {
+        return User::where('id', '!=', $idUser)
+            ->where('is_admin', config('setting.member'))
+            ->whereIn('id', function ($query) {
+                $query->select('follower_id')
+                ->from('relationships')
+                ->where('following_id', Auth::user()->id);
+            })->get();
+    }
+
+    public function getFollowing($idUser)
+    {
+        return User::where('is_admin', config('setting.member'))
+            ->whereIn('id', function ($query) {
+                $query->select('following_id')
+                ->from('relationships')
+                ->where('follower_id', Auth::user()->id);
+            })->get();
+    }
+
+    public function getActivity($id)
+    {
+        return User::with(['activities' => function ($query) {
+            $query->orderBy('id', 'DESC')->paginate(config('setting.review'));
+        }])->where('id', $id)->first();
     }
 }

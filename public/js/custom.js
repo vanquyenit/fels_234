@@ -52,24 +52,28 @@ $(document).ready(function() {
         var id = $(this).data('user-id');
         var unfollow = $(this).data('unfollow');
         var follow = $(this).data('follow');
+        var username = $(this).data('fullname');
         var idUser = $(this).closest('.people-rows').attr('data-user-follow');
-        if (dataFollow == 0) {
-            $(this).removeClass('green');
-            elem.val('1')
-            $(this).find('.text').text(unfollow);
-        } else {
-            $(this).addClass('green');
-            elem.val('0')
-            $(this).find('.text').text(follow);
-        }
+        var this_ = $(this);
+        var action = $(this).data('action');
         $.ajax({
-            action: 'UserController@following',
+            url: action,
             type: 'POST',
             data: {
                 id: id,
                 follow: dataFollow,
-                idUser: idUser
+                idUser: idUser,
+                username: username
             },
+            success : function (data) {
+                if (data == 1) {
+                    this_.removeClass('green');
+                    this_.find('.text').text(unfollow);
+                } else {
+                  this_.addClass('green')
+                  this_.find('.text').text(follow);
+              }
+            }
         })
     })
 });

@@ -1,5 +1,6 @@
 <?php
     return [
+        'editprofile' => 'Sửa hồ sơ ',
         'title' => 'Elearning',
         'avatar' => 'user.png',
         'activity' => 'Hoạt động',
@@ -11,6 +12,7 @@
         'un_provider' => 'Để ngắt kết nối với MXH , bạn cần tạo mật khẩu mới',
         'creat_pass' => 'tạo một mật khẩu mới trước đã.',
         'following' => 'Người theo dõi bạn',
+        'followuser' => 'Bạn đang theo dõi ',
         'learn_about' => 'từ học được',
         'char' => ' từ',
         'profile' => 'Hồ sơ',

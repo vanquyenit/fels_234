@@ -27,11 +27,6 @@
                         <span class="nav-item-btn-text">{{ trans('layout.course') }}</span>
                     </a>
                 </li>
-                <li class="header-nav-item plain ">
-                    <a href="{{ route('relationship.view', $arsUser['username']) }}" class="nav-item-btn">
-                        <span class="nav-item-btn-text">{{ trans('layout.activity') }}</span>
-                    </a>
-                </li>
                 <li class="header-profile-wrapper">
                     <span class="header-info-card js-info-toggle">
                         <span class="info-card-inner" accesskey="h">
@@ -64,10 +59,6 @@
                             <a href="{{ route('users.index', $arsUser['username']) }}" class="profile-link">
                                 <i class="profile-link-icon link-icon-1"></i>
                                 <span class="profile-link-text">{{ trans('layout.profile') }}</span>
-                            </a>
-                            <a href="{{ route('user.settings') }}" class="profile-link">
-                                <i class="profile-link-icon link-icon-2"></i>
-                                <span class="profile-link-text">{{ trans('layout.setting') }}</span>
                             </a>
                             <a href="{{ route('auth.auth.logout') }}" class="profile-link js-logout">
                                 <i class="profile-link-icon link-icon-3"></i>

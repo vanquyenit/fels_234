@@ -9,6 +9,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Http\File;
 use App\Models\User;
 use App\Http\Requests\UserRequest;
+use App\Http\Requests\UserUpdateRequest;
 use Hash;
 use Auth;
 
@@ -50,8 +51,7 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
         $fileName  = $request->file('images')->store('public');
-        $time = md5(time());
-        $avatar = 'image' . $time . '.jpg';
+        $image = md5(time()) . '' . explode('/', $fileName)[config('setting.admin')];
         Storage::move($fileName, 'public/' . $avatar);
         $user = new $this->user();
         $user->username = $request->username;
@@ -71,7 +71,6 @@ class UserController extends Controller
                 'flash_messages' => trans('language.admin.users.error'),
             ]);
         }
-        
     }
 
     /**
@@ -104,7 +103,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserUpdateRequest $request, $id)
     {
         $userLogin = Auth::user()->id;
 
@@ -115,11 +114,10 @@ class UserController extends Controller
             if ($request->hasFile('imagesUpdate')) {
                 Storage::delete('public/' . $user->avatar);
                 $fileName  = $request->file('imagesUpdate')->store('public');
-                $time = md5(time());
-                $avatar = 'image' . $time . '.jpg';
+                $image = md5(time()) . '' . explode('/', $fileName)[config('setting.admin')];
                 Storage::move($fileName, 'public/' . $avatar);
             }
-            
+
             $user->username = $request->username;
             $user->fullname = $request->fullname;
             $user->email = $request->email;
@@ -178,7 +176,7 @@ class UserController extends Controller
                             'flash_messages' => trans('language.admin.users.delete_fail'),
                         ]);
                     }
-                } 
+                }
             }
 
             return redirect()->action('Admin\UserController@index')->with([
